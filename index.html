@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TicTacToe</title>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script type="text/javascript" src="js/script.js"></script>
+</head>
+<body>
+  <div class="ui grid container">
+    <div class="two column row">
+      <div class="column">
+        <div class="ui huge segment" id="cross-score">
+          <i class="remove icon"></i>
+            <div class="ui right floated mini statistic">
+              <div class="value">-</div>
+            </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="ui huge segment" id="circle-score">
+          <i class="circle icon"></i>
+            <div class="ui right floated mini statistic">
+              <div class="value">-</div>
+            </div>
+        </div>
+      </div>
+      
+    </div>
+    <div class="three column row">
+      <div class="column"><button class="ui fluid button" onClick="toggle(this)"></button></div>
+      <div class="column"><button class="ui fluid button" onClick="toggle(this)"></button></div>
+      <div class="column"><button class="ui fluid button" onClick="toggle(this)"></button></div>
+    </div>
+    <div class="three column row">
+      <div class="column"><button class="ui fluid button" onClick="toggle(this)"></button></div>
+      <div class="column"><button class="ui fluid button" onClick="toggle(this)"></button></div>
+      <div class="column"><button class="ui fluid button" onClick="toggle(this)"></button></div>
+    </div>
+    <div class="three column row">
+      <div class="column"><button class="ui fluid button" onClick="toggle(this)"></button></div>
+      <div class="column"><button class="ui fluid button" onClick="toggle(this)"></button></div>
+      <div class="column"><button class="ui fluid button" onClick="toggle(this)"></button></div>
+    </div>
+  </div>
+</body>
+</html>

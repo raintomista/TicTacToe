@@ -1,0 +1,11 @@
+.ui.grid.container{
+  margin-top: 10px;
+  margin-bottom: 10px; 
+}
+.row > .column{
+  height: inherit;
+}
+
+.column > .ui.fluid.button{
+  height: 200px;
+}
