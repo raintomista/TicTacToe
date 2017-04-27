@@ -61,11 +61,10 @@ function get_utility(s){
 				if(s.board[i][j] == ' '){
 					if(s.turn == 'X')	return Number.MIN_VALUE
 					else				return Number.MAX_VALUE
-				}else{
-					return 0;
 				}
 			}	
 		}
+		return 0;
 	}
 
 }
