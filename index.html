@@ -6,10 +6,17 @@
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <script type="text/javascript" src="js/minmax.js"></script>
   <script type="text/javascript" src="js/script.js"></script>
-
+  <style>
+    .ui.grid.container{
+      max-height: 100vh;
+    }
+  </style>
 </head>
 <body>
   <div class="ui grid container">
+    <div class="row">
+      <h1 id="title">tictact.oe</h1>
+    </div>
     <div class="two column row">
       <div class="column">
         <div class="ui huge segment" id="cross-score">
@@ -29,11 +36,19 @@
       </div>
     </div>
     <script type="text/javascript">
+
+      if(currentPlayer == 1){
+        document.getElementById('circle-score').setAttribute('class', 'ui huge red segment');
+      }
+      else{
+        document.getElementById('cross-score').setAttribute('class', 'ui huge red segment');
+      }
+
       for(var i = 0; i < ROWS; i++){
         document.write("<div class=\"three column row\">");
         for(var j=0; j < COLS; j++){
           document.write("<div class=\"column\"><button class=\"ui fluid button\" value=\"" + 
-                          i + "," + j + "\" onClick=\"toggle(this)\"></button></div>");
+                          i + "," + j + "\" onClick=\"toggleUser(this)\"></button></div>");
         }
         document.write("</div>")
       }

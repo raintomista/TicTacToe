@@ -107,7 +107,7 @@ function next_move(s){
 
 function value(s){
 	var x = get_utility(s);
-	printBoard(s);
+	// printBoard(s);
 	moves += 1;
 	if(x == 1 || x == -1 || x == 0){ //terminal
 		return x;
@@ -176,10 +176,10 @@ var state = {
 	turn: 'X'
 };
 var board = [
-			['X',' ',' '],
-			['O','X','O'],
-			['X','O',' ']
+			[' ',' ',' '],
+			[' ',' ',' '],
+			[' ',' ',' ']
 		];
 
 state.board = board;
-console.log(next_move(state));
+// console.log(next_move(state));
