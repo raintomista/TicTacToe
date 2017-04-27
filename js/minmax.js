@@ -13,7 +13,7 @@ function get_utility(s){
 
 	//check winner per row
 	for(var i=0; i<ROWS; i++){
-		if(s.board[i][0] != ' ' && (s.board[i][0] == s.board[i][1] == s.board[i][2])){
+		if(s.board[i][0] != ' ' && s.board[i][0] == s.board[i][1] && s.board[i][1] == s.board[i][2]){
 			if(s.turn == 'X'){
 				if(s.board[i][0] == 'X')	return 1
 				else						return -1
@@ -26,7 +26,7 @@ function get_utility(s){
 
 	//check winner per column
 	for(var i=0; i<COLS; i++){
-		if(s.board[0][i] != ' ' && (s.board[0][i] == s.board[1][i] == s.board[2][i])){
+		if(s.board[0][i] != ' ' && s.board[0][i] == s.board[1][i] && s.board[1][i] == s.board[2][i]){
 			if(s.turn == 'X'){
 				if(s.board[i][0] == 'X')	return 1
 				else						return -1
@@ -38,7 +38,7 @@ function get_utility(s){
 	}
 
 	//check winner per diagonal
-	if(s.board[0][0] == s.board[1][1] == s.board[2][2]){
+	if(s.board[0][0] != ' ' && s.board[0][0] == s.board[1][1] && s.board[1][1] == s.board[2][2]){
 		if(s.turn == 'X'){
 				if(s.board[i][0] == 'X')	return 1
 				else						return -1
@@ -46,7 +46,7 @@ function get_utility(s){
 				if(s.board[i][0] == 'X')	return -1
 				else						return 1
 			}
-	}else if(s.board[2][0] == s.board[1][1] == s.board[0][2]){
+	}else if(s.board[2][0] != ' ' && s.board[2][0] == s.board[1][1] && s.board[1][1] == s.board[0][2]){
 		if(s.turn == 'X'){
 				if(s.board[i][0] == 'X')	return 1
 				else						return -1
@@ -92,9 +92,9 @@ function getBoard(s){
 
 
 board = [
-			['X',' ','O'],
+			['X','X',' '],
 			['O',' ','X'],
-			['X',' ','O']
+			[' ','X','O']
 		]
 state.board = board;
 state.utility = get_utility(state);
