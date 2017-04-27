@@ -36,14 +36,6 @@
       </div>
     </div>
     <script type="text/javascript">
-
-      if(currentPlayer == 1){
-        document.getElementById('circle-score').setAttribute('class', 'ui huge red segment');
-      }
-      else{
-        document.getElementById('cross-score').setAttribute('class', 'ui huge red segment');
-      }
-
       for(var i = 0; i < ROWS; i++){
         document.write("<div class=\"three column row\">");
         for(var j=0; j < COLS; j++){
@@ -52,6 +44,18 @@
         }
         document.write("</div>")
       }
+
+      var prompt = prompt("Choose a sign [X or O]: ", "");
+
+      if(prompt == "X"){
+        var currentPlayer = 0;
+        document.getElementById('cross-score').setAttribute('class', 'ui huge red segment');
+      }
+      else if(prompt == "O"){
+        var currentPlayer = 1;
+        document.getElementById('circle-score').setAttribute('class', 'ui huge red segment');
+      }
+
     </script>
   </div>
 </body>
