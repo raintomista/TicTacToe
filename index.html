@@ -4,7 +4,9 @@
 	<title>TicTacToe</title>
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css">
   <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script type="text/javascript" src="js/minmax.js"></script>
   <script type="text/javascript" src="js/script.js"></script>
+
 </head>
 <body>
   <div class="ui grid container">
@@ -25,23 +27,17 @@
             </div>
         </div>
       </div>
-      
     </div>
-    <div class="three column row">
-      <div class="column"><button class="ui fluid button" onClick="toggle(this)"></button></div>
-      <div class="column"><button class="ui fluid button" onClick="toggle(this)"></button></div>
-      <div class="column"><button class="ui fluid button" onClick="toggle(this)"></button></div>
-    </div>
-    <div class="three column row">
-      <div class="column"><button class="ui fluid button" onClick="toggle(this)"></button></div>
-      <div class="column"><button class="ui fluid button" onClick="toggle(this)"></button></div>
-      <div class="column"><button class="ui fluid button" onClick="toggle(this)"></button></div>
-    </div>
-    <div class="three column row">
-      <div class="column"><button class="ui fluid button" onClick="toggle(this)"></button></div>
-      <div class="column"><button class="ui fluid button" onClick="toggle(this)"></button></div>
-      <div class="column"><button class="ui fluid button" onClick="toggle(this)"></button></div>
-    </div>
+    <script type="text/javascript">
+      for(var i = 0; i < ROWS; i++){
+        document.write("<div class=\"three column row\">");
+        for(var j=0; j < COLS; j++){
+          document.write("<div class=\"column\"><button class=\"ui fluid button\" value=\"" + 
+                          i + "," + j + "\" onClick=\"toggle(this)\"></button></div>");
+        }
+        document.write("</div>")
+      }
+    </script>
   </div>
 </body>
 </html>

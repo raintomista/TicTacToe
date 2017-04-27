@@ -100,11 +100,23 @@ function getBoard(s){
 }
 
 
+
+function printBoard(s){
+	var string = "";
+	for(var i = 0; i < ROWS; i++){
+		for(var j = 0; j < COLS; j++){
+			string = string + s.board[i][j] + " ";
+		}
+		string = string + "\n";
+	}
+
+	console.log(string);
+}
+
 board = [
-			['X','X',' '],
-			['O',' ','X'],
-			[' ','X','O']
+			[' ',' ',' '],
+			[' ',' ',' '],
+			[' ',' ',' ']
 		]
 state.board = board;
 state.utility = get_utility(state);
-console.log(state);
