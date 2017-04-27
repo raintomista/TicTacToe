@@ -1,63 +1,34 @@
 'use strict';
 
-var board = [3][3];
-var state = {
-	utility: 0,
-	board: board,
-	turn: 'X'
-};
-var action = {
-	x_coord: -1,
-	y_coord: -1
-}
 var ROWS = 3;
 var COLS = 3;
+var moves;
 
 function get_utility(s){
 
 	//check winner per row
 	for(var i=0; i<ROWS; i++){
 		if(s.board[i][0] != ' ' && s.board[i][0] == s.board[i][1] && s.board[i][1] == s.board[i][2]){
-			if(s.turn == 'X'){
-				if(s.board[i][0] == 'X')	return 1
-				else						return -1
-			}else{
-				if(s.board[i][0] == 'X')	return -1
-				else						return 1
-			}
+			if(s.board[i][0] == 'X')	return 1
+			else						return -1
 		}
 	}
 
 	//check winner per column
 	for(var i=0; i<COLS; i++){
 		if(s.board[0][i] != ' ' && s.board[0][i] == s.board[1][i] && s.board[1][i] == s.board[2][i]){
-			if(s.turn == 'X'){
-				if(s.board[i][0] == 'X')	return 1
-				else						return -1
-			}else{
-				if(s.board[i][0] == 'X')	return -1
-				else						return 1
-			}
+			if(s.board[i][0] == 'X')	return 1
+			else						return -1
 		}
 	}
 
 	//check winner per diagonal
 	if(s.board[0][0] != ' ' && s.board[0][0] == s.board[1][1] && s.board[1][1] == s.board[2][2]){
-		if(s.turn == 'X'){
-				if(s.board[i][0] == 'X')	return 1
-				else						return -1
-			}else{
-				if(s.board[i][0] == 'X')	return -1
-				else						return 1
-			}
+		if(s.board[0][0] == 'X')	return 1
+		else						return -1
 	}else if(s.board[2][0] != ' ' && s.board[2][0] == s.board[1][1] && s.board[1][1] == s.board[0][2]){
-		if(s.turn == 'X'){
-				if(s.board[i][0] == 'X')	return 1
-				else						return -1
-			}else{
-				if(s.board[i][0] == 'X')	return -1
-				else						return 1
-			}
+		if(s.board[0][0] == 'X')	return 1
+		else						return -1
 	}else{
 		//check if it is a terminal node or not
 		for(var i=0; i<ROWS; i++){
@@ -74,20 +45,70 @@ function get_utility(s){
 }
 
 function result(s, a){
+	
 	var next_state = {
-		utility: get_utility(s),
-		board: s.board,
-		turn: s.turn
+		board: [],
+		turn: s.turn == 'X' ? 'O' : 'X'
 	};
+	
+	for(var i=0; i<s.board.length; i++){
+		next_state.board[i] = s.board[i].slice();
+	}
 
-	next_state.board[a.x_coord][a.y_coord] = next_state.turn = 'X' ? 'X' : 'Y';
-
+	next_state.board[a.x_coord][a.y_coord] = s.turn == 'X' ? 'X' : 'O';
 	return next_state;
+}
+
+function printBoard(s){
+	var string = "";
+	for(var i = 0; i < ROWS; i++){
+		for(var j = 0; j < COLS; j++){
+			string = string + s.board[i][j] + " ";
+		}
+		string = string + "\n";
+	}
+
+	console.log(string);
+}
+
+function next_move(s){
+	var utility = -1;
+	var optimal = {
+		x_coord: -1,
+		y_coord: -1,
+		moves: Number.MAX_VALUE
+	};
+	for(var i=0; i<ROWS; i++){
+		for(var j=0; j<COLS; j++){
+			if(s.board[i][j] == ' '){
+				
+				var a = {
+					x_coord: i,
+					y_coord: j
+				}
+
+				moves = 0;
+				var next_state = result(s, a);
+				var v = value(next_state);
+
+				if(v >= utility && moves < optimal.moves){
+					utility = v;
+					optimal.x_coord = i;
+					optimal.y_coord = j;
+					optimal.moves = moves;
+				}	
+				
+			}
+		}
+	}
+
+	return optimal;
 }
 
 function value(s){
 	var x = get_utility(s);
-
+	printBoard(s);
+	moves += 1;
 	if(x == 1 || x == -1 || x == 0){ //terminal
 		return x;
 	}
@@ -109,16 +130,13 @@ function min_value(s){
 				var a = {
 					x_coord: i,
 					y_coord: j
-				};
+				}
 
 				next_state = result(s, a);
 				var v = value(next_state);
 
-				if(m > v){
-					action.x_coord = i;
-					action.y_coord = j;
-					m = v;
-				}
+				if(v < m)	m = v;
+				
 			}
 		}
 	}
@@ -133,54 +151,35 @@ function max_value(s){
 	for(var i=0; i<ROWS; i++){
 		for(var j=0; j<COLS; j++){
 			if(s.board[i][j] == ' '){
-
 				var a = {
 					x_coord: i,
 					y_coord: j
-				};
+				}
 
 				next_state = result(s, a);
-
 				var v = value(next_state);
 
-				if(m < v){
-					action.x_coord = i;
-					action.y_coord = j;
-					m = v;
-				}
+				if(v > m)	m = v;
+				
 			}
 		}
 	}
 	return m
 }
 
-
-
 function getBoard(s){
 
 }
 
-
-
-function printBoard(s){
-	var string = "";
-	for(var i = 0; i < ROWS; i++){
-		for(var j = 0; j < COLS; j++){
-			string = string + s.board[i][j] + " ";
-		}
-		string = string + "\n";
-	}
-
-	console.log(string);
-}
-
-board = [
-			[' ',' ',' '],
-			[' ',' ',' '],
-			[' ',' ',' ']
+var state = {
+	board: [],
+	turn: 'X'
+};
+var board = [
+			['X',' ',' '],
+			['O','X','O'],
+			['X','O',' ']
 		];
 
 state.board = board;
-state.utility = get_utility(state);
-value(state);
-console.log(action);
+console.log(next_move(state));
