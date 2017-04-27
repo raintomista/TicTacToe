@@ -17,7 +17,7 @@ function get_utility(s){
 	//check winner per column
 	for(var i=0; i<COLS; i++){
 		if(s.board[0][i] != ' ' && s.board[0][i] == s.board[1][i] && s.board[1][i] == s.board[2][i]){
-			if(s.board[i][0] == 'X')	return 1
+			if(s.board[0][i] == 'X')	return 1
 			else						return -1
 		}
 	}
@@ -39,13 +39,14 @@ function get_utility(s){
 				}
 			}	
 		}
+		//draw
 		return 0;
 	}
 
 }
 
-function result(s, a){
-	
+/* Returns the next state given an action */
+function result(s, a){	
 	var next_state = {
 		board: [],
 		turn: s.turn == 'X' ? 'O' : 'X'
@@ -78,6 +79,8 @@ function next_move(s){
 		y_coord: -1,
 		moves: Number.MAX_VALUE
 	};
+
+	//iterate for all possible moves and choose the optimal move
 	for(var i=0; i<ROWS; i++){
 		for(var j=0; j<COLS; j++){
 			if(s.board[i][j] == ' '){
@@ -87,11 +90,14 @@ function next_move(s){
 					y_coord: j
 				}
 
+				//restart the number of moves
 				moves = 0;
+				//check the utility of each next move of the current state
 				var next_state = result(s, a);
 				var v = value(next_state);
 
-				if(v >= utility && moves < optimal.moves){
+				//compare and choose the best move
+				if(v >= utility && moves <= optimal.moves){
 					utility = v;
 					optimal.x_coord = i;
 					optimal.y_coord = j;
@@ -107,7 +113,6 @@ function next_move(s){
 
 function value(s){
 	var x = get_utility(s);
-	// printBoard(s);
 	moves += 1;
 	if(x == 1 || x == -1 || x == 0){ //terminal
 		return x;
@@ -120,6 +125,7 @@ function value(s){
 	}
 }
 
+//creates a max node that looks for the branch with the lowerst utility
 function min_value(s){
 	var m = Number.MAX_VALUE;
 	var next_state;
@@ -144,6 +150,7 @@ function min_value(s){
 
 }
 
+//creates a max node that looks for the branch with the highest utility
 function max_value(s){
 	var m = Number.MAX_VALUE * -1;
 	var next_state;
