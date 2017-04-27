@@ -70,7 +70,16 @@ function get_utility(s){
 }
 
 function value(s){
-
+	var x = get_utility(s);
+	if(x == 1 || x == -1 || x == 0){ //terminal
+		return x;
+	}
+	else if(x < 1){
+		return max_value(s);
+	}
+	else if(x > 1){
+		return min_value(s);
+	}
 }
 
 function min_value(s){
