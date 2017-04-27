@@ -6,6 +6,10 @@ var state = {
 	board: board,
 	turn: 'X'
 };
+var action = {
+	x_coord: -1,
+	y_coord: -1
+}
 var ROWS = 3;
 var COLS = 3;
 
@@ -59,7 +63,7 @@ function get_utility(s){
 		for(var i=0; i<ROWS; i++){
 			for(var j=0; j<COLS; j++){
 				if(s.board[i][j] == ' '){
-					if(s.turn == 'X')	return Number.MIN_VALUE
+					if(s.turn == 'X')	return Number.MAX_VALUE * -1
 					else				return Number.MAX_VALUE
 				}
 			}	
@@ -69,8 +73,21 @@ function get_utility(s){
 
 }
 
+function result(s, a){
+	var next_state = {
+		utility: get_utility(s),
+		board: s.board,
+		turn: s.turn
+	};
+
+	next_state.board[a.x_coord][a.y_coord] = next_state.turn = 'X' ? 'X' : 'Y';
+
+	return next_state;
+}
+
 function value(s){
 	var x = get_utility(s);
+
 	if(x == 1 || x == -1 || x == 0){ //terminal
 		return x;
 	}
@@ -83,14 +100,58 @@ function value(s){
 }
 
 function min_value(s){
-	var m = Number.MIN_VALUE;
-	
+	var m = Number.MAX_VALUE;
+	var next_state;
+
+	for(var i=0; i<ROWS; i++){
+		for(var j=0; j<COLS; j++){
+			if(s.board[i][j] == ' '){
+				var a = {
+					x_coord: i,
+					y_coord: j
+				};
+
+				next_state = result(s, a);
+				var v = value(next_state);
+
+				if(m > v){
+					action.x_coord = i;
+					action.y_coord = j;
+					m = v;
+				}
+			}
+		}
+	}
+	return m
 
 }
 
 function max_value(s){
-	var m = Number.MAX_VALUE;
-	
+	var m = Number.MAX_VALUE * -1;
+	var next_state;
+
+	for(var i=0; i<ROWS; i++){
+		for(var j=0; j<COLS; j++){
+			if(s.board[i][j] == ' '){
+
+				var a = {
+					x_coord: i,
+					y_coord: j
+				};
+
+				next_state = result(s, a);
+
+				var v = value(next_state);
+
+				if(m < v){
+					action.x_coord = i;
+					action.y_coord = j;
+					m = v;
+				}
+			}
+		}
+	}
+	return m
 }
 
 
@@ -117,6 +178,9 @@ board = [
 			[' ',' ',' '],
 			[' ',' ',' '],
 			[' ',' ',' ']
-		]
+		];
+
 state.board = board;
 state.utility = get_utility(state);
+value(state);
+console.log(action);
