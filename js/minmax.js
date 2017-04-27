@@ -13,7 +13,7 @@ function get_utility(s){
 
 	//check winner per row
 	for(var i=0; i<ROWS; i++){
-		if(s.board[i][0] == s.board[i][1] == s.board[i][2]){
+		if(s.board[i][0] != ' ' && (s.board[i][0] == s.board[i][1] == s.board[i][2])){
 			if(s.turn == 'X'){
 				if(s.board[i][0] == 'X')	return 1
 				else						return -1
@@ -26,7 +26,7 @@ function get_utility(s){
 
 	//check winner per column
 	for(var i=0; i<COLS; i++){
-		if(s.board[0][i] == s.board[1][i] == s.board[2][i]){
+		if(s.board[0][i] != ' ' && (s.board[0][i] == s.board[1][i] == s.board[2][i])){
 			if(s.turn == 'X'){
 				if(s.board[i][0] == 'X')	return 1
 				else						return -1
