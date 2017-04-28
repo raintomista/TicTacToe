@@ -27,7 +27,7 @@ function get_utility(s){
 		if(s.board[0][0] == 'X')	return 1
 		else						return -1
 	}else if(s.board[2][0] != ' ' && s.board[2][0] == s.board[1][1] && s.board[1][1] == s.board[0][2]){
-		if(s.board[0][0] == 'X')	return 1
+		if(s.board[2][0] == 'X')	return 1
 		else						return -1
 	}else{
 		//check if it is a terminal node or not
@@ -189,4 +189,3 @@ var board = [
 		];
 
 state.board = board;
-// console.log(next_move(state));
