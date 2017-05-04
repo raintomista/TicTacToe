@@ -80,6 +80,9 @@ function next_move(s){
 		moves: Number.MAX_VALUE
 	};
 
+	var alpha = Number.MIN_VALUE;
+	var beta = Number.MAX_VALUE;
+
 	//iterate for all possible moves and choose the optimal move
 	for(var i=0; i<ROWS; i++){
 		for(var j=0; j<COLS; j++){
@@ -94,7 +97,7 @@ function next_move(s){
 				moves = 0;
 				//check the utility of each next move of the current state
 				var next_state = result(s, a);
-				var v = value(next_state);
+				var v = value(next_state, alpha, beta);
 
 				//compare and choose the best move
 				if(v >= utility && moves <= optimal.moves){
@@ -111,23 +114,24 @@ function next_move(s){
 	return optimal;
 }
 
-function value(s){
+function value(s, alpha, beta){
 	var x = get_utility(s);
 	moves += 1;
 	if(x == 1 || x == -1 || x == 0){ //terminal
 		return x;
 	}
 	else if(x < 1){
-		return max_value(s);
+		return max_value(s, alpha, beta);
 	}
 	else if(x > 1){
-		return min_value(s);
+		return min_value(s, alpha, beta);
 	}
 }
 
 //creates a max node that looks for the branch with the lowerst utility
-function min_value(s){
-	var m = Number.MAX_VALUE;
+function min_value(s, alpha, beta){
+	var v = Number.MAX_VALUE;
+
 	var next_state;
 
 	for(var i=0; i<ROWS; i++){
@@ -139,20 +143,20 @@ function min_value(s){
 				}
 
 				next_state = result(s, a);
-				var v = value(next_state);
+				var v = value(next_state, alpha, beta);
 
-				if(v < m)	m = v;
-				
+				if(v <= alpha) return v;
+				else beta = value(next_state, alpha, beta);
 			}
 		}
 	}
-	return m
+	return v
 
 }
 
 //creates a max node that looks for the branch with the highest utility
-function max_value(s){
-	var m = Number.MAX_VALUE * -1;
+function max_value(s, alpha, beta){
+	var v = Number.MIN_VALUE;
 	var next_state;
 
 	for(var i=0; i<ROWS; i++){
@@ -164,14 +168,15 @@ function max_value(s){
 				}
 
 				next_state = result(s, a);
-				var v = value(next_state);
+				var v = value(next_state, alpha, beta);
 
-				if(v > m)	m = v;
+				if(v >= beta) return v;
+				else alpha = value(next_state, alpha, beta);
 				
 			}
 		}
 	}
-	return m
+	return v
 }
 
 function getBoard(s){
